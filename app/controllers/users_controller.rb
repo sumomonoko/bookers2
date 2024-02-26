@@ -1,13 +1,19 @@
 class UsersController < ApplicationController
-  def show
-    #URLに記載されたIDを参考に必要なUserモデルを取得する、という処理
-    @user = User.find(params[:id])
-    #特定のユーザに関連付けられた全てを取得し@booksに渡す、という処理
-    @books = @user.post_images
+  def index
+    @user = current_user
+    @book = Book.new
+    @users = User.all
   end
 
   def edit
     @user = User.find(params[:id])
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @users = User.all
+    @book = Book.new
+    @books = Book.all
   end
 
   def update
@@ -18,8 +24,7 @@ class UsersController < ApplicationController
 
 
   private
-
   def user_params
-    params.require(:user).permit(:name, :profile_image)
+    params.require(:user).permit(:name, :introduction, :image)
   end
 end
